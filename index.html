@@ -1,0 +1,156 @@
+<!doctype html>
+<html class="no-js" lang="">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="x-ua-compatible" content="ie=edge">
+        <title></title>
+        <meta name="description" content="">
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+        <link rel="manifest" href="site.webmanifest">
+        <link rel="apple-touch-icon" href="icon.png">
+        <!-- Place favicon.ico in the root directory -->
+
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
+        <link href="https://use.fontawesome.com/releases/v5.0.2/css/all.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.css" />
+        <link rel="stylesheet" href="css/justifiedGallery.min.css" />
+        <link rel="stylesheet" href="css/normalize.css">
+        <link rel="stylesheet" href="css/main.css">
+    </head>
+    <body>
+        <!--[if lte IE 9]>
+            <p class="browserupgrade">You are using an <strong>outdated</strong> browser. Please <a href="https://browsehappy.com/">upgrade your browser</a> to improve your experience and security.</p>
+        <![endif]-->
+
+        <!-- Add your site or application content here -->
+        <nav class="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+            <a class="navbar-brand" href="#">Gallery</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExampleDefault" aria-controls="navbarsExampleDefault" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarsExampleDefault">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Home <span class="sr-only">(current)</span></a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+
+        <main role="main">
+            <div class="container" id="content">
+            </div>
+        </main>
+
+
+
+
+
+        <script src="js/vendor/modernizr-3.5.0.min.js"></script>
+        <script
+                src="https://code.jquery.com/jquery-3.2.1.min.js"
+                integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4="
+                crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/fancybox/3.2.5/jquery.fancybox.min.js"></script>
+        <script src="js/jquery.justifiedGallery.min.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-3.2.1.min.js"><\/script>')</script>
+        <script src="js/handlebars-v4.0.11.js"></script>
+        <script src="js/plugins.js"></script>
+        <script src="js/main.js"></script>
+
+
+        <!-- Google Analytics: change UA-XXXXX-Y to be your site's ID. -->
+        <script>
+            window.ga=function(){ga.q.push(arguments)};ga.q=[];ga.l=+new Date;
+            ga('create','UA-XXXXX-Y','auto');ga('send','pageview')
+        </script>
+        <script src="https://www.google-analytics.com/analytics.js" async defer></script>
+
+
+        <script type="text/x-handlebars-template" id="filesAndFolders">
+            <div class="row">
+
+                <div class="col-md-12">
+                    <h3>{{path}}</h3>
+                    <br/>
+                    {{#if parent}}
+                    <a href="#" class="selectFolder" data-id="{{parent}}">
+                        <i class="fa fa-arrow-left"></i>
+                        Zurück
+                    </a>
+                    {{/if}}
+                    <br/><br/>
+                </div>
+
+                {{#each folders}}
+                <div class="col-md-12">
+                    <a href="#" class="selectFolder" data-id="{{fullpath}}">
+                        <i class="far fa-folder-open" style="font-size:3em;"></i>
+                        {{name}}
+                    </a>
+                </div>
+                {{/each}}
+            </div>
+            <div class="row">
+                <div id="justified">
+                    {{#each files}}
+                    <a href="loader.php?size=mid&hash={{hash}}" data-fancybox="gallery" data-caption="{{exif this}}">
+                        <img src="loader.php?size=thumb&hash={{hash}}" >
+                        <div class="caption">
+                            {{#if this.views}}
+                                Views:&nbsp;{{this.views}}&nbsp;
+                            {{/if}}
+
+                            {{#if votes}}
+                                Rating:
+                            {{#each votes.stars}}
+                                {{#if full}}
+                                    <i class="fa fa-star"></i>
+                                {{else}}
+                                    {{#if half}}
+                                        <i class="fas fa-star-half"></i>
+                                    {{else}}
+                                        <i class="far fa-star"></i>
+                                    {{/if}}
+                                {{/if}}
+                            {{/each}}
+                                ({{votes.votes}} Votes)
+                            {{/if}}
+
+                            {{#if this.exif}}
+                            {{#if this.exif.camera}}
+                            <br/>Kamera:&nbsp;{{this.exif.camera}}
+                            {{/if}}
+                            {{#if this.exif.place}}
+                            <br/><div style="{{linkStyling}}" class="mapslink" data-href="{{mapsurl this.exif.place.formatted}}">Ort: {{this.exif.place.formatted}}</div>
+                            {{/if}}
+
+                            {{/if}}
+
+                        </div>
+                    </a>
+                    {{/each}}
+                </div>
+            </div>
+
+        </script>
+
+    <script type="text/x-handlebars-template" id="throbberTemplate">
+        <div class="row">
+            <div class="col-md-12 text-center">
+                <img src="img/loading.gif"/>
+            </div>
+        </div>
+    </script>
+
+
+    </body>
+</html>
